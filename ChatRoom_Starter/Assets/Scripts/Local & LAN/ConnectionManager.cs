@@ -110,10 +110,13 @@ public class ConnectionManager : MonoBehaviour
     // Called when the client disconnects from the server
     private void OnClientDisconnected(ulong clientId)
     {
+        if (NetManager.Singleton.IsServer)
+            return;
+
         if (clientId == NetManager.Singleton.LocalClientId)
         {
-            chatUI.SetStatus("Disconnected", Color.red);
             chatUI.ClearMessage();
+            ResetConnection();
         }
     }
 
@@ -122,6 +125,8 @@ public class ConnectionManager : MonoBehaviour
         if (NetManager.Singleton.IsListening)
             NetManager.Singleton.Shutdown();
 
+        chatUI.ClearAllMessagesInChat();
+        chatUI.SetStatus("Disconnected", Color.red);
         chatUI.SetAllConnectionButtons(true);
         chatUI.SetAllConnectionFields(true, Color.white);
         chatUI.ClearAllConnectionFields();

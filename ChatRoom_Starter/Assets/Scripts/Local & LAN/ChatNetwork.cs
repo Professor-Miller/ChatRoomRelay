@@ -23,7 +23,10 @@ public class ChatNetwork : NetworkBehaviour
 
     public override void OnNetworkDespawn()
     {
-        if (IsServer && NetworkManager != null)
+        if (NetworkManager == null)
+            return;
+
+        if (IsServer)
             NetworkManager.OnClientDisconnectCallback -= OnClientDisconnected;
     }
 
@@ -107,7 +110,7 @@ public class ChatNetwork : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void SystemMessageRpc(string message, string color)
     {
-        chatUI.AddMessage("", $"<color={color}>{message}</color><color=yellow><b> :</b></color>");
+        chatUI.AddMessage("", $"<color={color}>{message}</color>");
     }
 
     private void OnClientDisconnected(ulong clientId)

@@ -57,7 +57,7 @@ public class ChatUI : MonoBehaviour
         var newMessage = Instantiate(chatMessageGO, chatContentDisplay.transform);
 
         newMessage.TryGetComponent(out TextMeshProUGUI messageText);
-        messageText.text = $"<color=yellow><b>{username}:</b></color> {message}";
+        messageText.text = $"<color=yellow><b>{username}</b></color><br>{message}";
 
         StartCoroutine(ScrollToBottom());
     }
@@ -122,6 +122,17 @@ public class ChatUI : MonoBehaviour
     public void ClearErrorMessage()
     {
         SetErrorMessage(false, "");
+    }
+
+    public void ClearAllMessagesInChat()
+    {
+        if (chatContentDisplay.transform.childCount == 0)
+            return;
+
+        foreach (Transform child in chatContentDisplay.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     private IEnumerator ScrollToBottom()
