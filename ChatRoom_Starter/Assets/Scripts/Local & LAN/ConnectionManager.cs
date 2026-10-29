@@ -34,7 +34,7 @@ public class ConnectionManager : MonoBehaviour
     {
         if (!chatUI.ValidateConnectionFields())
         {
-            chatUI.SetErrorMessage(true, "Complete All Connection Fields Before Starting a Host Session");
+            chatUI.SetErrorMessage(true, "Complete All Connection Fields Before Hosting a Session");
             return;
         }
 
